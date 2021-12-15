@@ -2,26 +2,26 @@ from rest_framework import serializers
 from transportation_app.models import TransportItem, MainCategory, SubCategory, Color
 
 
-class MainCategorySerializer(serializers.HyperlinkedModelSerializer):
+class SubCategorySerializer(serializers.HyperlinkedModelSerializer):
 
-    parent_id = serializers.PrimaryKeyRelatedField(queryset=MainCategory.objects.all(), source='parent_name')
+    parent_id = serializers.PrimaryKeyRelatedField(queryset=MainCategory.objects.all(), source='parent.id')
 
     class Meta:
         model = SubCategory
-        fields = ('child_name', 'parent_id')
+        fields = ('id', 'child_name', 'parent_id')
 
     def create(self, validated_data):
-        subject = SubCategory.objects.create(parent=validated_data['parent_id']['child_name'], child_name=validated_data['SubCategory'])
+        child= SubCategory.objects.create(parent=validated_data['parent']['id'], child_name=validated_data['child_name'])
 
-        return SubCategory
+        return child
 
 
-class SubCategorySerializer(serializers.HyperlinkedModelSerializer):
-    children = MainCategorySerializer(many=True, read_only=True)
+class MainCategorySerializer(serializers.HyperlinkedModelSerializer):
+    children = SubCategorySerializer(many=True, read_only=True)
 
     class Meta:
         model = MainCategory
-        fields = ('id', 'child_name', 'children')
+        fields = ('id', 'name', 'children')
 
 
 class TransportItemSerializer(serializers.ModelSerializer):

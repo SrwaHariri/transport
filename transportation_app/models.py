@@ -2,11 +2,10 @@ from django.db import models
 
 
 class MainCategory(models.Model):
-    child_name = models.CharField(max_length=50)
-    parent_name = models.CharField(max_length=50, blank=True)
+    name = models.CharField(max_length=50)
 
     def __str__(self):
-        return str(self.child_name)
+        return str(self.name)
 
     class Meta:
         ordering = ['-id']
@@ -38,7 +37,7 @@ class TransportItem (models.Model):
     transportModel = models.CharField(max_length=200)
     colors = models.ManyToManyField(Color, related_name="item", blank=True)
     subCategory = models.ForeignKey(
-        SubCategory, on_delete=models.CASCADE, related_name="item")
+        SubCategory, on_delete=models.PROTECT, related_name="item")
 
     def __str__(self):
         return str(self.name)
