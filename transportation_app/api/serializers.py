@@ -4,14 +4,14 @@ from transportation_app.models import TransportItem, MainCategory, SubCategory, 
 
 class MainCategorySerializer(serializers.HyperlinkedModelSerializer):
 
-    parent_id = serializers.PrimaryKeyRelatedField(queryset=MainCategory.objects.all(), source='parent.id')
+    parent_id = serializers.PrimaryKeyRelatedField(queryset=MainCategory.objects.all(), source='parent_name')
 
     class Meta:
         model = SubCategory
         fields = ('child_name', 'parent_id')
 
     def create(self, validated_data):
-        subject = SubCategory.objects.create(parent=validated_data['parent']['id'], child_name=validated_data['SubCategory'])
+        subject = SubCategory.objects.create(parent=validated_data['parent_id']['child_name'], child_name=validated_data['SubCategory'])
 
         return SubCategory
 
@@ -21,7 +21,7 @@ class SubCategorySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = MainCategory
-        fields = ('name', 'children')
+        fields = ('id', 'child_name', 'children')
 
 
 class TransportItemSerializer(serializers.ModelSerializer):
