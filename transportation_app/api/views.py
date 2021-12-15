@@ -1,6 +1,7 @@
 from transportation_app.models import TransportItem, MainCategory, SubCategory, Color
 from transportation_app.api.serializers import TransportItemSerializer, MainCategorySerializer, SubCategorySerializer, ColorSerializer
-from rest_framework import status, generics
+from rest_framework import  generics
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import filters
 
 
