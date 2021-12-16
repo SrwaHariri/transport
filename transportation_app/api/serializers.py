@@ -1,27 +1,12 @@
 from rest_framework import serializers
-from transportation_app.models import TransportItem, MainCategory, SubCategory, Color
+from transportation_app.models import TransportItem, Category, Color
 
 
-class SubCategorySerializer(serializers.HyperlinkedModelSerializer):
-
-    parent_id = serializers.PrimaryKeyRelatedField(queryset=MainCategory.objects.all(), source='parent.id')
+class CategorySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
-        model = SubCategory
-        fields = ('id', 'child_name', 'parent_id')
-
-    def create(self, validated_data):
-        child= SubCategory.objects.create(parent=validated_data['parent']['id'], child_name=validated_data['child_name'])
-
-        return child
-
-
-class MainCategorySerializer(serializers.HyperlinkedModelSerializer):
-    children = SubCategorySerializer(many=True, read_only=True)
-
-    class Meta:
-        model = MainCategory
-        fields = ('id', 'name', 'children')
+        model = Category
+        fields = ('id', 'name', 'parent')
 
 
 class TransportItemSerializer(serializers.ModelSerializer):
@@ -29,7 +14,7 @@ class TransportItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TransportItem
-        fields = ('name', 'transportModel', 'subCategory', 'colors')
+        fields = ('name', 'transport_model', 'category', 'colors')
 
 
 class ColorSerializer(serializers.ModelSerializer):
@@ -38,5 +23,3 @@ class ColorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Color
         fields = ('name', 'transport_list')
-
-

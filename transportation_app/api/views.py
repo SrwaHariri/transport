@@ -1,32 +1,20 @@
-from transportation_app.models import TransportItem, MainCategory, SubCategory, Color
-from transportation_app.api.serializers import TransportItemSerializer, MainCategorySerializer, SubCategorySerializer, ColorSerializer
-from rest_framework import  generics
+from transportation_app.models import TransportItem, Category, Color
+from transportation_app.api.serializers import TransportItemSerializer, CategorySerializer, ColorSerializer
+from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import filters
 
 
-class MainCategoryList(generics.ListCreateAPIView):
-    queryset = MainCategory.objects.all()
-    serializer_class = MainCategorySerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['name']
-
-
-class MainCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = MainCategory.objects.all()
-    serializer_class = MainCategorySerializer
-
-
-class SubCategoryList(generics.ListCreateAPIView):
-    queryset = SubCategory.objects.all()
-    serializer_class = SubCategorySerializer
+class CategoryList(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['parent', 'child_name']
 
 
-class SubCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = SubCategory.objects.all()
-    serializer_class = SubCategorySerializer
+class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
 
 class ColorList(generics.ListCreateAPIView):
