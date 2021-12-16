@@ -24,7 +24,7 @@ class Color (models.Model):
         ordering = ['-id']
 
 
-class TransportItem (models.Model):
+class TransportItem(models.Model):
     name = models.CharField(max_length=200)
     transport_model = models.CharField(max_length=200)
     colors = models.ManyToManyField(Color, )
@@ -36,3 +36,18 @@ class TransportItem (models.Model):
 
     class Meta:
         ordering = ['-id']
+
+
+@receiver(post_save, sender=TransportItem)
+def SetDefaultColor(**kwargs):
+        # unpack kwargs:
+        item = kwargs['instance']
+
+        # set color if field is empty:
+        if not item.color.all():
+            # get the resource pool department:
+            pink = Color.objects.get(name='pink')
+
+            # add to instance:
+            item.color.add(pink)
+            item.save()
