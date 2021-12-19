@@ -37,17 +37,18 @@ class TransportItem(models.Model):
     class Meta:
         ordering = ['-id']
 
+    @receiver(post_save, sender='transportation_app.TransportItem')
+    def set_default_color(**kwargs):
 
-@receiver(post_save, sender=TransportItem)
-def SetDefaultColor(**kwargs):
         # unpack kwargs:
         item = kwargs['instance']
 
-        # set color if field is empty:
-        if not item.color.all():
-            # get the resource pool department:
-            pink = Color.objects.get(name='pink')
+        # check if its empty field
+
+        if not item.colors.all().exists():
+
+            pink, created = Color.objects.get_or_create(name='pink')
 
             # add to instance:
-            item.color.add(pink)
+            item.colors.add(pink)
             item.save()
