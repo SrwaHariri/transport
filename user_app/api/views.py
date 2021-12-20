@@ -1,12 +1,27 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework import status
+from rest_framework.permissions import AllowAny
+from user_app.api.serializers import RegistrationSerializer, LogoutSerializer
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 
-from user_app.api.serializers import RegistrationSerializer
+
+class LogoutApiView(generics.GenericAPIView):
+    serializer_class = LogoutSerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def logout_view(request):
 
     if request.method == 'POST':
@@ -15,6 +30,7 @@ def logout_view(request):
 
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def registration_view(request):
 
     if request.method == 'POST':
