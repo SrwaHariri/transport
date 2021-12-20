@@ -39,7 +39,7 @@ class ColorDetail (generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
-class TransportList(generics.ListCreateAPIView):
+class TransportItemList(generics.ListCreateAPIView):
     queryset = TransportItem.objects.all()
     serializer_class = TransportItemSerializer
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
@@ -48,7 +48,7 @@ class TransportList(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
-class TransportDetail(generics.RetrieveUpdateDestroyAPIView):
+class TransportItemDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = TransportItem.objects.all()
     serializer_class = TransportItemSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]

@@ -1,13 +1,13 @@
 from django.urls import path, include
-from transportation_app.api.views import TransportList, TransportDetail, CategoryList, CategoryDetail, ColorList,\
+from transportation_app.api.views import TransportItemList, TransportItemDetail, CategoryList, CategoryDetail, ColorList,\
     ColorDetail
 from rest_framework.routers import DefaultRouter
 
 
 urlpatterns = [
 
-    path('item/', TransportList.as_view(), name='transport-list'),
-    path('item/<int:pk>', TransportDetail.as_view(), name='transport-detail'),
+    path('item/', TransportItemList.as_view(), name='item-list'),
+    path('item/<int:pk>', TransportItemDetail.as_view(), name='item-detail'),
 
     path('ctg/', CategoryList.as_view(), name='category'),
     path('ctg/<int:pk>', CategoryDetail.as_view(), name='category'),
