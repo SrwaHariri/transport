@@ -9,8 +9,8 @@ urlpatterns = [
     path('item/', TransportItemList.as_view(), name='item-list'),
     path('item/<int:pk>', TransportItemDetail.as_view(), name='item-detail'),
 
-    path('ctg/', CategoryList.as_view(), name='category'),
-    path('ctg/<int:pk>', CategoryDetail.as_view(), name='category'),
+    path('ctg/', CategoryList.as_view(), name='category-list'),
+    path('ctg/<int:pk>', CategoryDetail.as_view(), name='category-detail'),
 
     path('color/', ColorList.as_view(), name='color-list'),
     path('color/<int:pk>', ColorDetail.as_view(), name='color-detail'),

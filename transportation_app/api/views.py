@@ -1,14 +1,14 @@
 from transportation_app.models import TransportItem, Category, Color
 from transportation_app.api.serializers import TransportItemSerializer, CategorySerializer, ColorSerializer
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated ,AllowAny
 from rest_framework import filters
 
 
 class CategoryList(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     search_fields = ['name']
     ordering_fields = ['name', ]
@@ -30,13 +30,13 @@ class ColorList(generics.ListCreateAPIView):
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     search_fields = ['name']
     ordering_fields = ['name']
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
 
 
 class ColorDetail (generics.RetrieveUpdateDestroyAPIView):
     queryset = Color.objects.all()
     serializer_class = ColorSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
 
 
 class TransportItemList(generics.ListCreateAPIView):

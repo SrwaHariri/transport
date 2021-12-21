@@ -17,9 +17,3 @@ class UserTestCase(APITestCase):
         }
         response = self.client.post(reverse('token_obtain_pair'), data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    # def test_logout(self):
-    #     self.token = Token.objects.get(user__username='parycka')
-    #     self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
-    #     response = self.client.post(reverse('logout'))
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
