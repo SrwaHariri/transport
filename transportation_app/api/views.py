@@ -1,7 +1,7 @@
 from transportation_app.models import TransportItem, Category, Color
 from transportation_app.api.serializers import TransportItemSerializer, CategorySerializer, ColorSerializer
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated ,AllowAny
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated, AllowAny
 from rest_framework import filters
 
 

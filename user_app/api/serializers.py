@@ -6,7 +6,7 @@ class LogoutSerializer(serializers.Serializer):
 
     refresh = serializers.CharField()
     default_error_messages = {
-        'invalid_token': 'token is expired'
+        'invalid_token': 'token is blacklisted'
     }
 
     def validate(self, attrs):
