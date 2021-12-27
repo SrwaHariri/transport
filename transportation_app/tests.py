@@ -66,17 +66,17 @@ class TransportItemTestCase(APITestCase):
         }
         response = self.client.put(reverse('item-detail', args=(self.item.id,)), data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-#
-#     def test_TransportItem_delete(self):
-#         data = {
-#             'name': 'kia',
-#             'transport_model': 'celtos',
-#             'colors': 'white',
-#             'category': 1
-#         }
-#         response = self.client.delete(reverse('item-detail', args=(self.item.id,)), data)
-#         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-#
+
+    def test_TransportItem_delete(self):
+        data = {
+            'name': 'kia',
+            'transport_model': 'celtos',
+            'colors': 'white',
+            'category': 1
+        }
+        response = self.client.delete(reverse('item-detail', args=(self.item.id,)), data)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
 #
 # class CategoryTestCase(APITestCase):
 #
