@@ -5,57 +5,33 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework import filters
 from rest_framework import mixins, permissions
 from rest_framework.viewsets import GenericViewSet
+from rest_framework import viewsets
 
 
 class CategoryViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin, GenericViewSet):
     queryset = Category.objects.all()
     serializer_class = ColorSerializer
 
-
-class CategoryList(generics.ListCreateAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     search_fields = ['name']
     ordering_fields = ['name', ]
 
-    def post(self, request, *args, **kwargs):
-        print(request.user)
-        return super().post(request, *args, **kwargs)
 
-
-class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-
-class ColorList(generics.ListCreateAPIView):
+class ColorViewSet(viewsets.ModelViewSet):
     queryset = Color.objects.all()
     serializer_class = ColorSerializer
+
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     search_fields = ['name']
     ordering_fields = ['name']
     permission_classes = [AllowAny]
 
 
-class ColorDetail (generics.RetrieveUpdateDestroyAPIView):
-    queryset = Color.objects.all()
-    serializer_class = ColorSerializer
-    permission_classes = [AllowAny]
-
-
-class TransportItemList(generics.ListCreateAPIView):
+class TransportItem(viewsets.ModelViewSet):
     queryset = TransportItem.objects.all()
     serializer_class = TransportItemSerializer
+
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     search_fields = ['name', 'colors', 'transport_model', ' category__name']
     ordering_fields = ['name']
-    permission_classes = [IsAuthenticated]
-
-
-class TransportItemDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = TransportItem.objects.all()
-    serializer_class = TransportItemSerializer
     permission_classes = [IsAuthenticated]

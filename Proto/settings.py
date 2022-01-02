@@ -1,6 +1,7 @@
 
 from pathlib import Path
 from datetime import timedelta
+from os import getenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -13,10 +14,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-td-zd1vm*xj3!@kk7$i5js2lc5^f_shn*2mcss(byd$u=#vfh='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = eval(getenv('DEBUG', 'False'))
 
-ALLOWED_HOSTS = []
-
+# allow all hosts during development
+ALLOWED_HOSTS = (getenv('ALLOWED_HOSTS') or '*').split(',')
+INTERNAL_IPS = ['127.0.0.1']
 
 # Application definition
 
@@ -123,9 +125,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
 
 REST_FRAMEWORK = {
 
